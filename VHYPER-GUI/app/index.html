@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Hyperloop at Virginia Tech Control GUI</title>
+
+<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<div id="container">
+		<div id="header">
+			<h1>Hyperloop at Virginia Tech</h1>
+		</div>
+		<div id="guage_cluster">
+			<div id="acc_x" class="large_guage">
+			</div>
+			<div id="vel_x" class="large_guage">
+			</div>
+			<div id="pos_x" class="large_guage">
+			</div>
+			<div id="strip_count" class="large_guage">
+			</div>
+			<div id="pitch" class="large_guage">
+			</div>
+			<div id="roll" class="large_guage">
+			</div>
+		</div>
+		<div id="table_div">
+			<div id="left_cluster">
+				<h1>Levitation</h1>
+				<table id="levitation_table" class="value_table">
+					<tr>
+						<th>Front Right</th>
+						<td><span id="front_right">140</span> mm</td>
+					</tr>
+					<tr>
+						<th>Front Left</th>
+						<td><span id="front_left">140</span> mm</td>
+					</tr>
+					<tr>
+						<th>Back Right</th>
+						<td><span id="back_right">140</span> mm</td>
+					</tr>
+					<tr>
+						<th>Back Left</th>
+						<td><span id="back_left">140</span> mm</td>
+					</tr>
+				</table>
+				<br>
+				<h1>Stability</h1>
+				<table id="stability_table" class="value_table">
+					<tr>
+						<th>Front Center</th>
+						<td><span id="front_center">120</span> mm</td>
+					</tr>
+					<tr>
+						<th>Back Center</th>
+						<td><span id="back_center">120</span> mm</td>
+					</tr>
+				</table>
+				<br>
+				<h1>Mechanical States</h1>
+				<table id="mechanical_state_table" class="value_table">
+					<tr>
+						<th>Brake Status</th>
+						<td><span id="brake_status">Disengaged</span></td>
+					</tr>
+					<tr>
+						<th>Pusher Status</th>
+						<td><span id="pusher_status">Disconnected</span></td>
+					</tr>
+					<tr>
+						<th>Low Speed Status</th>
+						<td><span id="low_speed_status">Off</span></td>
+					</tr>
+				</table>
+			</div>
+			<div id="center_cluster">
+				<h1>Pod State</h1>
+				<div id="state_div">
+					<div><span id="pod_state">Idle</span></div>
+				</div>
+				<br>
+
+				<div id="alert_message_div">
+					<div id="alert_message"></div>
+				</div>
+				<br>
+				<h1>Time</h1>
+				<table id="time_table" class="value_table">
+					<tr>
+						<th>Pod Run Time</th>
+						<td><span id="pod_run_time">0</span> s</td>
+					</tr>
+					<tr>
+						<th>Test Run Time</th>
+						<td><span id="test_run_time">0</span> s</td>
+					</tr>
+					<tr>
+						<th>Last Optical Marking</th>
+						<td><span id="last_strip_time">0</span> s</td>
+					</tr>
+				</table>
+				<br>
+				<h1>Battery Status</h1>
+				<table id="battery_status_table" class="value_table">
+					<tr>
+						<th>Current</th>
+						<td><span id="current">0</span> A</td>
+					</tr>
+				</table>
+			</div>
+			<div id="right_cluster">
+				<h1>Board Temperatures</h1>
+				<table id="temperature_table" class="value_table">
+					<tr>
+						<th>Raspberry Pi</th>
+						<td><span id="raspberry_pi">0</span> &deg;C</td>
+					</tr>
+					<tr>
+						<th>DC-DC Converter</th>
+						<td><span id="dc_dc_converter">0</span> &deg;C</td>
+					</tr>
+					<tr>
+						<th>Cerebot</th>
+						<td><span id="cerebot">0</span> &deg;C</td>
+					</tr>
+				</table>
+				<br>
+				<h1>Battery Temperatures</h1>
+				<table id="battery_temperature_table" class="value_table">
+					<tr>
+						<th>Battery 1</th>
+						<td><span id="battery_1">0</span> &deg;C</td>
+					</tr>
+					<tr>
+						<th>Battery 2</th>
+						<td><span id="battery_2">0</span> &deg;C</td>
+					</tr>
+					<tr>
+						<th>Battery 3</th>
+						<td><span id="battery_3">0</span> &deg;C</td>
+					</tr>
+					<tr>
+						<th>Battery 4</th>
+						<td><span id="battery_4">0</span> &deg;C</td>
+					</tr>
+				</table>
+				<br>
+				<h1>Pressure Sensors</h1>
+				<table id="pressure_table" class="value_table">
+					<tr>
+						<th>High Side</th>
+						<td><span id="pressure_high">0</span> psi</td>
+					</tr>
+					<tr>
+						<th>Low Side</th>
+						<td><span id="pressure_low">0</span> psi</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="controls_div">
+			<div class="controls_column">
+				<h1>Brakes</h1>
+				<div>
+					<div id="brakes_on_button" class="control_button button_green">Engage</div>
+					<div id="brakes_off_button" class="control_button button_red">Disengage</div>
+				</div>
+			</div>
+			<div class="controls_column">
+				<h1>Low Speed</h1>
+				<div id="low_speed_on_button" class="control_button button_green">Engage</div>
+				<div id="low_speed_off_button" class="control_button button_red">Disengage</div>
+			</div>
+		</div>
+		<div id="start_stop_div">
+			<div class="start_stop_div_column">
+				<h1>&nbsp;</h1>
+				<div id="start_test">Start Test</div>
+			</div>
+			<div class="start_stop_div_column">
+				<h1>&nbsp;</h1>
+				<div id="stop_test">Stop Test</div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="./js/raphael-2.1.4.min.js"></script>
+    <script src="./js/justgage.js"></script>
+	<script src="./js/control.js"></script>
+</body>
+</html>
