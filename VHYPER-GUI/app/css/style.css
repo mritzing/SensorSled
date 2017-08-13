@@ -201,14 +201,14 @@ body {
 
 .controls_column {
 	display: table-cell;
-	width: 50%;
+	width: 33%;
 	text-align: center;
 	margin: 0;
 	padding: 0;
 }
 
 .control_button {
-	width: 40%;
+	width: 60%;
 	height: 40px;
 	line-height: 40px;
 	margin: 10px auto;

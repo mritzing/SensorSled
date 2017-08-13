@@ -183,6 +183,7 @@ client.on('data', function(data) {
 		statePackage['pusher_status'] = u8[7];
 		statePackage['brake_status'] = u8[8];
 		statePackage['low_speed_status'] = u8[9];
+		statePackage['propulsion_status'] = u8[10];
 		
 		gagePackage['acc_x'] = (i16[0] / 100).toFixed(2);
 		gagePackage['vel_x'] = (i16[3] / 100).toFixed(2);
@@ -206,6 +207,7 @@ client.on('data', function(data) {
 		tablePackage['back_left'] = (u16[19] / 100).toFixed(2);
 		tablePackage['pressure_high'] = u16[20];
 		tablePackage['pressure_low'] = u16[21];
+		tablePackage['propulsion_pressure'] = u16[21];
 		tablePackage['raspberry_pi'] = (u16[25] / 10).toFixed(1);
 		tablePackage['dc_dc_converter'] = (u16[26] / 10).toFixed(1);
 		tablePackage['cerebot'] = (u16[27] / 10).toFixed(1);
@@ -253,4 +255,12 @@ document.getElementById('start_test').addEventListener('click', function() {
 
 document.getElementById('stop_test').addEventListener('click', function() {
 	client.write(new Buffer([0xAA, 0x55, 0x00, 0x01, 0x01, 0x00, 0x31]));
+}, false);
+
+document.getElementById('propulsion_on_button').addEventListener('click', function() {
+	client.write(new Buffer([0xAA, 0x55, 0x00, 0x01, 0x01, 0x00, 0x40]));
+}, false);
+
+document.getElementById('propulsion_off_button').addEventListener('click', function() {
+	client.write(new Buffer([0xAA, 0x55, 0x00, 0x01, 0x01, 0x00, 0x41]));
 }, false);
