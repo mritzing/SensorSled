@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/microchip/harmony/v1_11/apps/hyperloop_controls/firmware/src/communication.h</file>
+            <file>file:/C:/microchip/harmony/v1_11/apps/hyperloop_controls/firmware/src/debug.c</file>
+            <file>file:/C:/microchip/harmony/v1_11/apps/hyperloop_controls/firmware/src/i2c.h</file>
+            <file>file:/C:/microchip/harmony/v1_11/apps/hyperloop_controls/firmware/src/debug.h</file>
             <file>file:/C:/microchip/harmony/v1_11/apps/hyperloop_controls/firmware/src/communication.c</file>
             <file>file:/C:/microchip/harmony/v1_11/apps/hyperloop_controls/firmware/src/control.c</file>
+            <file>file:/C:/microchip/harmony/v1_11/apps/hyperloop_controls/firmware/src/i2c.c</file>
             <file>file:/C:/microchip/harmony/v1_11/apps/hyperloop_controls/firmware/src/control.h</file>
         </group>
     </open-files>

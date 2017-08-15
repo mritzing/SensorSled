@@ -120,7 +120,8 @@ extern "C" {
 
 #define MIN_PROPULSION_DISTANCE 0 //min distance for propulsion
 #define MIN_PROPULSION_TIME 5000 //
-
+#define PROPULSION_ACTIVE 0x01
+    
 #define ACCELERATION_START_THRESHOLD 50 // acceleration indicating that the pusher is active
 #define ACCELERATION_START_COUNT 1 // number of positive acceleration readings to indicate the pusher is active
 #define BRAKING_COMPLETE_THRESHOLD  10 // acceleration indicating that the pod has stopped

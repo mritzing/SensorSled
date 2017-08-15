@@ -395,7 +395,13 @@ void CONTROL_Tasks(void) {
                     {
                         ChangePusherState();
                         if (control_data.telemetry.pusher_status == PUSHER_STATUS_DETACHED) {
-                            control_data.state = CONTROL_STATE_BRAKING;
+                            if(PROPULSION_ACTIVE) {
+                                control_data = CONTROL_STATE_BRAKING;
+                                //start timer
+                            }
+                            else {
+                                control_data.state = CONTROL_STATE_BRAKING;
+                            }
                             SendControlAlert(ALERT_PUSH_STATE_CHANGE);
                         }
                         break;
@@ -428,8 +434,68 @@ void CONTROL_Tasks(void) {
         case CONTROL_STATE_PROPULSION:
         {
             DEBUG_MESSAGE(ERROR_CONTROL_STATE_PROPULSION);
-            if (control_data.telemetry.test_run_time >= MIN_PROPULSION_TIME && control_data.telemetry.strip_count >= MIN_PROPULSION_DISTANCE && control_data.telemetry.pusher_status == PUSHER_STATUS_DETACHED) {
+            //change timer to time from disconnect
+            if (control_data.telemetry.test_run_time >= MIN_PROPULSION_TIME && control_data.telemetry.strip_count >= MIN_PROPULSION_DISTANCE && control_data.telemetry.pusher_status == PUSHER_STATUS_DETACHED && PROPULSION_ACTIVE) {
                 SetPropulsionOn(true);
+            }
+            
+            if (xQueueReceive(control_data.receiveQ, &control_data.receive_message, portMAX_DELAY)) {
+                switch (control_data.receive_message.type) {
+                    case AHRS_DATA_MESSAGE:
+                    {
+                        ReceiveAhrsData(&control_data.receive_message.data[0]);
+                        control_data.received_ahrs_data = true;
+                        break;
+                    }
+                    case I2C_DATA_MESSAGE:
+                    {
+                        ReceiveI2cData(&control_data.receive_message.data[0]);
+                        control_data.received_i2c_data = true;
+                        if (!CheckBoundConditionsAnalog()) {
+                            SendControlAlert(ALERT_I2C_OUT_OF_BOUNDS);
+                        }
+                        break;
+                    }
+                    case PHOTOELECTRIC_STATE_MESSAGE:
+                    {
+                        ReceivePhotoelectric(control_data.receive_message.data[0]);
+                        if (control_data.telemetry.strip_count >= MAX_BRAKING_DISTANCE) {
+                            SendControlAlert(ALERT_MAX_BRAKING_DISTANCE_PASSED);
+                        }
+                        break;
+                    }                    
+                    case PUSHER_STATE_MESSAGE:
+                    {
+                        ChangePusherState();
+                        if (control_data.telemetry.pusher_status == PUSHER_STATUS_DETACHED) {
+                            control_data.state = CONTROL_STATE_BRAKING;
+                            SendControlAlert(ALERT_PUSH_STATE_CHANGE);
+                        }
+                        break;
+                    }
+                    case COMMUNICATION_READ:
+                    {
+                        switch (control_data.receive_message.data[0]) {
+                            case COMMAND_EMERGENCY_STOP:
+                            {
+                                SetPropulsionOn(false);
+                                control_data.state = CONTROL_STATE_BRAKING;
+                                SendControlAlert(ALERT_EMERGENCY_STOP_COMMAND_RECEIVED);
+                                break;
+                            }
+                            case COMMAND_MESSAGE_ACK:
+                            {
+                                control_data.received_message_ack = true;
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
             }
             break;
         }
