@@ -27,6 +27,9 @@ void CONTROL_Initialize(void) {
     // Initialize braking port to output
     SYS_PORTS_DirectionSelect(PORTS_ID_0, SYS_PORTS_DIRECTION_OUTPUT, PORT_CHANNEL_D, 1 << 9);
 
+    //Initialize propulsion port to output 
+    SYS_PORTS_DirectionSelect(PORTS_ID_0, SYS_PORTS_DIRECTION_OUTPUT, PORT_CHANNEL_A, 1 << 9);
+
     // Set the photoelectric status
     control_data.photoelectric_0 = PHOTOELECTRIC_STATUS_OFF;
     control_data.photoelectric_1 = PHOTOELECTRIC_STATUS_OFF;
@@ -881,11 +884,15 @@ void ChangePusherState() {
 }
 
 void SetPropulsionOn(bool state) {
-    
+    if (state) {
+        SYS_PORTS_Set(PORTS_ID_0, PORT_CHANNEL_A, 1 << 9, 1 << 9);
+        control_data.telemetry.propulsion_status = PROPULSION_STATUS_ON;
+    } else {
+        control_data.telemetry.propulsion_status = PROPULSION_STATUS_OFF;
+        SYS_PORTS_Clear(PORTS_ID_0, PORT_CHANNEL_A, 1 << 9);
+    }
 }
-void SetDrainValveOn(bool state) {
     
-}
 void SetBrakesOn(bool state) {
     if (state) {
         SYS_PORTS_Set(PORTS_ID_0, PORT_CHANNEL_D, 1 << 9, 1 << 9);

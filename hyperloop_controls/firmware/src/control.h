@@ -205,6 +205,7 @@ typedef struct __attribute__((__packed__))
     uint8_t pusher_status;
     uint8_t brake_status;
     uint8_t low_speed_status; 
+    uint8_t propulsion_status;
     int16_t ahrs_x_acc;
     int16_t ahrs_y_acc;
     int16_t ahrs_z_acc;
